@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - breakable
+  - Enemy
+  - NPC
+  - Projectile
+  - Weapon
+  - MainCanvas
+  - UI
+  - Background
+  - Wall
+  - patrolPoints
+  - bossHealth
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Enemy
+  - breakable
+  - Player
+  - weapon
+  - PhaseThrough
+  - Background
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Signs
+    uniqueID: 113996695
+    locked: 0
+  - name: Player
+    uniqueID: 1860395887
+    locked: 0
+  - name: breakable
+    uniqueID: 339244259
+    locked: 0

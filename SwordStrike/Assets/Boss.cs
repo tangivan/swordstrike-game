@@ -252,7 +252,7 @@ public class Boss : GenericEnemy
         }
     }
 
-
+    /*
     public override void TakeDamage(float damageAmount, int wepElement)
     {
         switch (element)
@@ -281,4 +281,5 @@ public class Boss : GenericEnemy
 
         HealthBar.GetComponent<Slider>().value = health;
     }
+    */
 }

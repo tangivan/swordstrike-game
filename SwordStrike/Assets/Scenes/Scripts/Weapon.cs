@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 
 public class Weapon : MonoBehaviour
@@ -37,7 +38,9 @@ public class Weapon : MonoBehaviour
 
     public GameObject player;
 
-    
+    //hitCounter event
+    public UnityEvent onKill;
+    public UnityEvent onMiss;
 
     /********      AttackSpeed variables         **************/
     private float attackSpeed;
@@ -97,83 +100,9 @@ public class Weapon : MonoBehaviour
             target.z = transform.position.z;
             attacking = true;
             collider.isTrigger = true;
-            //StartCoroutine(SwordAttack());
             StartCoroutine(HomingSwordAttack(savePosition, target));
         }
-        /* This code rotates based on movement of joystick
-        if (attacking == false)
-        {
-            float temp = Mathf.Atan2(Input.GetAxis("Vertical"), Input.GetAxis("Horizontal")) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, temp + angleAddition));
-        }
-        */
-
-
-
-        //   Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-        //  float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        //  Quaternion rotation = Quaternion.AngleAxis(angle + angleAddition, Vector3.forward);
-
-            //  Vector2 moveVec = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * speed;
-
-
-            // transform.rotation = Quaternion.LookRotation(-Vector3.forward, moveVec);
-
-
-            /*
-            foreach (Touch touch in Input.touches)
-            {
-
-
-
-
-                if (touch.phase == TouchPhase.Began)
-                {
-                    int id = touch.fingerId;
-                    if (EventSystem.current.IsPointerOverGameObject(id))
-                        return;
-
-                    if (Input.touchCount >= 1 && attacking == false)
-                    {
-                        //Vector2 direction = Camera.main.ScreenToWorldPoint(touch.position) - transform.position;
-                      //  float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                       // Quaternion rotation = Quaternion.AngleAxis(angle + angleAddition, Vector3.forward);
-
-                        savePosition = transform.position;
-                        Vector3 target = Camera.main.ScreenToWorldPoint(touch.position);
-
-                        target.z = transform.position.z;
-                  //      transform.rotation = rotation;
-                        attacking = true;
-                        collider.isTrigger = true;
-                        StartCoroutine(HomingSwordAttack(savePosition, target));
-
-
-                    }
-                }
-            }*/
-            /*
-            if (!(touch.phase==TouchPhase.Ended) && Input.touchCount == 2 && attacking == false)
-            {
-                Debug.Log("here");
-                Instantiate(hitSound, transform.position, Quaternion.identity);
-                Touch temp = Input.GetTouch(1);
-                Vector2 direction = Camera.main.ScreenToWorldPoint(temp.position) - transform.position;
-                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                Quaternion rotation = Quaternion.AngleAxis(angle + angleAddition, Vector3.forward);
-
-                savePosition = transform.position;
-                Vector3 target = Camera.main.ScreenToWorldPoint(temp.position);
-
-                target.z = transform.position.z;
-                transform.rotation = rotation;
-                attacking = true;
-                collider.isTrigger = true;
-                StartCoroutine(HomingSwordAttack(savePosition, target));
-            }
-            */
-
-
+     
 
             /*
             if (attackSpeed >= threshold1 && attackSpeed < threshold2)
@@ -216,12 +145,7 @@ public class Weapon : MonoBehaviour
         attackSpeed = baseAttackSpeed; 
      
         attacking = false;
-
-
-        /*    MOBILE CODE
-         * rb.velocity = targetPosition * 100;
-           yield return new WaitForSeconds(2f);
-         */
+        onMiss.Invoke();
     }
 
 
@@ -238,10 +162,6 @@ public class Weapon : MonoBehaviour
             
         }
        
-      //  if (collision != null)
-      //  {
-    //        collision.isTrigger = true;
-     //   }
         collider.isTrigger = true;
         attacking = false;
     }
@@ -262,9 +182,14 @@ public class Weapon : MonoBehaviour
 
             StopAllCoroutines();
             StartCoroutine(flyBack(collision));
-        //    enemyHit = true;
+            //    enemyHit = true;
             if (attacking == true)
-                collision.GetComponent<GenericEnemy>().TakeDamage(damage, element);
+            {
+                bool temp;
+                temp = collision.GetComponent<GenericEnemy>().TakeDamage(damage, element);
+                if (temp)
+                    onKill.Invoke();
+            }
         }
     }
 

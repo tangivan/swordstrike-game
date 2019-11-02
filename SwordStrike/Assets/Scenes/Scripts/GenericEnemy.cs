@@ -35,6 +35,8 @@ public class GenericEnemy : MonoBehaviour
 
     public bool isBoss;
 
+    //death confirmation for hitCounter
+    private bool isDead;
 
     public virtual void Start()
     {
@@ -58,11 +60,12 @@ public class GenericEnemy : MonoBehaviour
             healthBar.GetComponent<Slider>().value = health;
             healthBar.gameObject.SetActive(true);
         }
+        isDead = false;
     }
 
 
 
-    public virtual void TakeDamage(float damageAmount, int wepElement)
+    public virtual bool TakeDamage(float damageAmount, int wepElement)
     {
         switch (element)
         {
@@ -82,6 +85,7 @@ public class GenericEnemy : MonoBehaviour
 
         if (health <= 0)
         {
+            //loot
             int randomNumber = Random.Range(0, 101);
             if (randomNumber < pickupChance)
             {
@@ -92,6 +96,9 @@ public class GenericEnemy : MonoBehaviour
 
             healthBar.SetActive(false);
             Destroy(gameObject);
+            Destroy(healthBar);
+            isDead = true;
+            return isDead;
         }
         if(!isBoss)
           healthBar.GetComponent<Slider>().value = health;
@@ -99,6 +106,8 @@ public class GenericEnemy : MonoBehaviour
         {
             bossHealthBar.value = health;
         }
+
+        return isDead;
     }
 
     public virtual float elementalBonus(float damageAmount,float wepElement)

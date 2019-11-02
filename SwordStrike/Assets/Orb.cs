@@ -9,7 +9,7 @@ public class Orb : GenericEnemy
     private bool orbDead = false;
 
 
-
+    /*
     public override void TakeDamage(float damageAmount, int wepElement)
     {
         switch (element)
@@ -38,7 +38,7 @@ public class Orb : GenericEnemy
 
         healthBar.GetComponent<Slider>().value = health;
     }
-
+    */
     public override float elementalBonus(float damageAmount, float wepElement)
     {
         float bonus;

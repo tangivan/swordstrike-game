@@ -96,7 +96,7 @@ public class ChargeEnemy : GenericEnemy
             yield return null;
         }
         gameObject.layer = LayerMask.NameToLayer("Enemy");
-        GetComponent<Collider2D>().isTrigger = true;
+     //   GetComponent<Collider2D>().isTrigger = true;
         trail.SetActive(false);
         isAttacking = false;
 
@@ -106,9 +106,9 @@ public class ChargeEnemy : GenericEnemy
     {
         if (collision.gameObject.CompareTag("Player") && GetComponent<Collider2D>().isTrigger)
         {
+            player.GetComponent<SimplePlayer>().TakeDamage(damage);
+            // StartCoroutine(Phase());
 
-            StartCoroutine(Phase());
-          
 
 
         }
@@ -121,7 +121,7 @@ public class ChargeEnemy : GenericEnemy
         {
             player.GetComponent<SimplePlayer>().TakeDamage(damage);
         }
-        GetComponent<Collider2D>().isTrigger = false;
+      //  GetComponent<Collider2D>().isTrigger = false;
         gameObject.layer = LayerMask.NameToLayer("PhaseThrough");
     }
 }

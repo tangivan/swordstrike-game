@@ -28,7 +28,6 @@ public class SimpleKnockBack : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy") && collider.isTrigger)
         {
             Rigidbody2D hit = collision.GetComponent<Rigidbody2D>();
-            Debug.Log(hit);
             collider.isTrigger = false;
             if (hit != null)
             {
@@ -43,8 +42,11 @@ public class SimpleKnockBack : MonoBehaviour
 
         }
 
+        simplePlayerScript = collision.GetComponent<SimplePlayer>();
 
-        if (collision.gameObject.CompareTag("Player") && collider.isTrigger)
+        //   if (collision.gameObject.CompareTag("Player") && collider.isTrigger)
+
+        if (collision.gameObject.CompareTag("Player") && simplePlayerScript.triggerCollider.enabled)
         {
             Rigidbody2D hit = collision.GetComponent<Rigidbody2D>();
 
@@ -53,7 +55,7 @@ public class SimpleKnockBack : MonoBehaviour
                     cameraAnim.SetTrigger("shake");
 
 
-                    simplePlayerScript = collision.GetComponent<SimplePlayer>();
+                 //   simplePlayerScript = collision.GetComponent<SimplePlayer>();
                 if(simplePlayerScript.stagger==false)
                 {
                     Instantiate(hitParticles, collision.transform.position, Quaternion.identity);

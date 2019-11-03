@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 7196292925078685248}
   - component: {fileID: 7196292925078685251}
   - component: {fileID: 7196292925078685249}
+  - component: {fileID: 2552141165667494773}
   m_Layer: 8
   m_Name: FireSnake
   m_TagString: Enemy
@@ -156,7 +157,7 @@ MonoBehaviour:
     type: 3}
   bossHealthBar: {fileID: 0}
   needsHealthBar: 1
-  healthBar: {fileID: 2560703053425159839, guid: 2b44dd7b1f1ea7041829a109781c307e,
+  healthBar: {fileID: 8225094982759574276, guid: 3709a89183b5c814e8dc3e911b1fbe11,
     type: 3}
   element: 1
   pickupChance: 10
@@ -238,6 +239,32 @@ MonoBehaviour:
   hitSound: {fileID: 2860923018077252473, guid: 286a8d76b39f37348aedc47b32895f8f,
     type: 3}
   isOrb: 0
+--- !u!61 &2552141165667494773
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7196292925078685262}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.021473885, y: -0.096633434}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 3.56, y: 5.1000004}
+    newSize: {x: 3.56, y: 5.1000004}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3.087572, y: 4.7349405}
+  m_EdgeRadius: 0
 --- !u!1 &7196292926456597971
 GameObject:
   m_ObjectHideFlags: 0

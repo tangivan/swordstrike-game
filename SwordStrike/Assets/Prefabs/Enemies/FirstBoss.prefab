@@ -658,6 +658,7 @@ MonoBehaviour:
   damage: 1
   deathEffect: {fileID: 1693796932481725790, guid: 015c7c27852ce5146ad97a6bd80e77ba,
     type: 3}
+  bossHealthBar: {fileID: 0}
   needsHealthBar: 0
   healthBar: {fileID: 8557715124197502931, guid: 3aa9db4fb2f921a40bd2264e0023dc79,
     type: 3}
@@ -672,8 +673,8 @@ MonoBehaviour:
   isBoss: 0
   minX: -55
   maxX: 55
-  minY: 45
-  maxY: 45
+  minY: -33
+  maxY: 34
   timeBetweenSummons: 3
   enemyToSummon: {fileID: 1288550623541168847, guid: 369827ccc16e9cb498e195707bf1203a,
     type: 3}
@@ -707,6 +708,7 @@ MonoBehaviour:
   mySprite1: {fileID: 9017676221339025215}
   mySprite2: {fileID: 9017676220872973683}
   mySprite3: {fileID: 9017676220314823940}
+  bossBody: {fileID: 9017676221339025209}
 --- !u!1 &9017676220314823942
 GameObject:
   m_ObjectHideFlags: 0
@@ -1114,7 +1116,7 @@ GameObject:
   - component: {fileID: 9017676221339025214}
   - component: {fileID: 9017676221339025215}
   m_Layer: 8
-  m_Name: body
+  m_Name: bossBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

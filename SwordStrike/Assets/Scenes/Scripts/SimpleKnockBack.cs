@@ -24,7 +24,7 @@ public class SimpleKnockBack : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-       
+
         if (collision.gameObject.CompareTag("Enemy") && collider.isTrigger)
         {
             Rigidbody2D hit = collision.GetComponent<Rigidbody2D>();

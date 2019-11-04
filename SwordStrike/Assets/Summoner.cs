@@ -51,30 +51,134 @@ public class Summoner : GenericEnemy
     public SpriteRenderer mySprite2;
     public SpriteRenderer mySprite3;
 
+    public GameObject bossBody;
 
 
+    private Vector3 direction;
 
     public override void Start()
     {
         base.Start();
-        float randomX = Random.Range(minX, maxX);
-        float randomY = Random.Range(minY, maxY);
-        targetPosition = new Vector2(randomX, randomY);
         anim = GetComponent<Animator>();
         isBoss = true;
     }
 
     private void Update()
     {
+        //flips animation
+        spriteDirection();
+
         // Element of boss changes every 'x' seconds. sprite color signifies element
+        elementChange();
+
+        if (health >= 75)
+            firstAtkPattern();
+        if (health < 75 && health >= 50)
+        {
+            
+            secondAtkPattern();
+        }
+
+
+    }
+
+    public void Summon()
+    {
+        if(player !=null)
+        {
+            Instantiate(enemyToSummon, transform.position, transform.rotation);
+        }
+    }
+
+
+    public void firstAtkPattern()
+    {
+        if (player != null)
+        {
+            anim.SetBool("isRunning", true);
+
+            if (Time.time >= summonTime)
+            {
+                summonTime = Time.time + timeBetweenSummons;
+                anim.SetTrigger("shoot");
+
+            }
+        }
+    }
+
+    public void secondAtkPattern()
+    {
+
+        anim.SetBool("isRunning", false);
+        if (Time.time >= attackTime)
+        {
+           
+            float randomX = Random.Range(minX, maxX);
+            float randomY = Random.Range(minY, maxY);
+            targetPosition = new Vector2(randomX, randomY);
+
+            attackTime = Time.time + timeBetweenAttacks;
+
+            StartCoroutine(TeleportAttackCo());
+
+            Instantiate(deathEffect, transform.position, Quaternion.identity);
+
+
+
+        }
+    }
+
+    private IEnumerator TeleportAttackCo()
+    {
+        bossBody.SetActive(false);
+
+        Instantiate(deathEffect, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(0.3f);
+        transform.position = targetPosition;
+        RangedAttack();
+        bossBody.SetActive(true);
+    }
+
+
+    public void RangedAttack()
+    {
+        Vector2 direction = player.position - shotPoint2.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Quaternion rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+        shotPoint2.rotation = rotation;
+
+        Instantiate(fireball1, shotPoint1.position, shotPoint1.rotation);
+        Instantiate(fireball1, shotPoint2.position, shotPoint2.rotation);
+        Instantiate(fireball2, shotPoint3.position, shotPoint3.rotation);
+        Instantiate(fireball3, shotPoint4.position, shotPoint4.rotation);
+        Instantiate(fireball4, shotPoint5.position, shotPoint5.rotation);
+        Instantiate(fireball5, shotPoint6.position, shotPoint6.rotation);
+        Instantiate(soundlessFireBall, shotPoint7.position, shotPoint7.rotation);
+    }
+
+    public void spriteDirection()
+    {
+        direction = (transform.position - player.position).normalized;
+
+        if (direction.x < 0)
+        {
+            transform.eulerAngles = new Vector3(0, 180, 0);
+        }
+        else if (direction.x > 0)
+        {
+            transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+    }
+
+    public void elementChange()
+    {
         if (Time.time >= elementDuration)
         {
             elementDuration = Time.time + timeBetweenElement;
             int random = Random.Range(1, 5);
-            Debug.Log(random);
             if (random == 4 && element == 4)
                 random = 3;
-            if(random==1 && element!=1)
+            if (random == 1 && element != 1)
             {
                 mySprite1.color = fireElement;
                 mySprite2.color = fireElement;
@@ -84,7 +188,7 @@ public class Summoner : GenericEnemy
                 cb.disabledColor = new Color32(168, 18, 18, 255);
                 bossHealthBar.colors = cb;
             }
-            else if (random == 2 && element!=2)
+            else if (random == 2 && element != 2)
             {
                 mySprite1.color = waterElement;
                 mySprite2.color = waterElement;
@@ -94,7 +198,7 @@ public class Summoner : GenericEnemy
                 cb.disabledColor = new Color32(0, 39, 212, 255);
                 bossHealthBar.colors = cb;
             }
-            else if (random == 3 && element!=3)
+            else if (random == 3 && element != 3)
             {
                 mySprite1.color = airElement;
                 mySprite2.color = airElement;
@@ -115,65 +219,6 @@ public class Summoner : GenericEnemy
                 bossHealthBar.colors = cb;
             }
         }
-
-
-
-        if (player != null)
-        {
-         //   if(Vector2.Distance(transform.position, targetPosition) > .5f)
-         //   {
-               // transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-              //  anim.SetBool("isRunning", true);
-         //   }
-         ////   else
-        //    {
-                anim.SetBool("isRunning", false);
-
-                if(Time.time >= summonTime)
-                {
-                    summonTime = Time.time + timeBetweenSummons;
-                    anim.SetTrigger("shoot");
-                    
-                }
-          //  }
-/*
-            if (Vector2.Distance(transform.position, player.position) < stopDistance)
-            {
-                if (Time.time >= attackTime)
-                {
-                   // StartCoroutine(Attack());
-                   // attackTime = Time.time + timeBetweenAttacks;
-
-                }
-            }
-            */
-        }
-    }
-
-    public void Summon()
-    {
-        if(player !=null)
-        {
-            Instantiate(enemyToSummon, transform.position, transform.rotation);
-        }
-    }
-
-
-
-    public void RangedAttack()
-    {
-        Vector2 direction = player.position - shotPoint2.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Quaternion rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-        shotPoint2.rotation = rotation;
-
-        Instantiate(fireball1, shotPoint1.position, shotPoint1.rotation);
-        Instantiate(fireball1, shotPoint2.position, shotPoint2.rotation);
-        Instantiate(fireball2, shotPoint3.position, shotPoint3.rotation);
-        Instantiate(fireball3, shotPoint4.position, shotPoint4.rotation);
-        Instantiate(fireball4, shotPoint5.position, shotPoint5.rotation);
-        Instantiate(fireball5, shotPoint6.position, shotPoint6.rotation);
-        Instantiate(soundlessFireBall, shotPoint7.position, shotPoint7.rotation);
     }
 
     // Rewrites elemental bonus to heal boss when using weak element, deal no damage with neutral element
@@ -197,7 +242,6 @@ public class Summoner : GenericEnemy
                 {
                     bonus = 0;
                 }
-                Debug.Log(bonus);
                 return bonus;
             case 2:
                 if (wepElement == 1)

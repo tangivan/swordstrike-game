@@ -30,6 +30,37 @@ Transform:
   m_Father: {fileID: 9017676220192042009}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1939987969175355428
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 669684600954976678}
+  m_Layer: 0
+  m_Name: trail activator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &669684600954976678
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939987969175355428}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.05, y: -0.93, z: 0.1221314}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_Children:
+  - {fileID: 6576094985561246731}
+  m_Father: {fileID: 9017676220192042009}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1960791532279198634
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,6 +181,143 @@ Transform:
   m_Father: {fileID: 9017676220192042009}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6064455951267514255
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6576094985561246731}
+  - component: {fileID: 2961153315042032211}
+  m_Layer: 8
+  m_Name: Trail
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &6576094985561246731
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6064455951267514255}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.37, y: -1.32, z: 0.23977761}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 669684600954976678}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!96 &2961153315042032211
+TrailRenderer:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6064455951267514255}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Time: 0.5
+  m_Parameters:
+    serializedVersion: 3
+    widthMultiplier: 1
+    widthCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    colorGradient:
+      serializedVersion: 2
+      key0: {r: 0.6603774, g: 0, b: 0, a: 1}
+      key1: {r: 0.6603774, g: 0, b: 0, a: 0}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    numCornerVertices: 0
+    numCapVertices: 0
+    alignment: 0
+    textureMode: 0
+    shadowBias: 0.5
+    generateLightingData: 0
+  m_MinVertexDistance: 0.1
+  m_Autodestruct: 0
+  m_Emitting: 1
 --- !u!1 &6331171772366163632
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,6 +712,7 @@ GameObject:
   - component: {fileID: 9017676220192042013}
   - component: {fileID: 9017676220192042012}
   - component: {fileID: 9017676220192042015}
+  - component: {fileID: 3328728656739884398}
   m_Layer: 8
   m_Name: FirstBoss
   m_TagString: Enemy
@@ -570,6 +739,7 @@ Transform:
   - {fileID: 6914496400724479609}
   - {fileID: 6370140861562756641}
   - {fileID: 4215351729447627238}
+  - {fileID: 669684600954976678}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -651,8 +821,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9e1b46862df88743af612ada811e06f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 26
   player: {fileID: 0}
+  isDpsCheck: 0
+  dpsCounter: 0
   speed: 20
   timeBetweenAttacks: 3
   damage: 1
@@ -676,7 +848,7 @@ MonoBehaviour:
   minY: -33
   maxY: 34
   timeBetweenSummons: 3
-  enemyToSummon: {fileID: 1288550623541168847, guid: 369827ccc16e9cb498e195707bf1203a,
+  enemyToSummon: {fileID: 6132969306870584894, guid: ca9f5a91e860afc4094577fb8b962a76,
     type: 3}
   attackSpeed: 2
   stopDistance: 5
@@ -709,6 +881,31 @@ MonoBehaviour:
   mySprite2: {fileID: 9017676220872973683}
   mySprite3: {fileID: 9017676220314823940}
   bossBody: {fileID: 9017676221339025209}
+  timeBtwSpawns: 0
+  startTimeBtwSpawns: 0.5
+  trail: {fileID: 6064455951267514255}
+  dashSound: {fileID: 2170455374756664071, guid: 385266268b57aea45b7d03ad0ea25e74,
+    type: 3}
+--- !u!114 &3328728656739884398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9017676220192042008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e4bac5a661d4f448e5bd20b6d65734, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thrust: 100
+  knockTime: 0.1
+  collider: {fileID: 9017676220192042013}
+  hitParticles: {fileID: 8526627275018926845, guid: b5876cc933dd8ce46ba00a1975832bcc,
+    type: 3}
+  hitSound: {fileID: 2860923018077252473, guid: 286a8d76b39f37348aedc47b32895f8f,
+    type: 3}
+  isOrb: 0
 --- !u!1 &9017676220314823942
 GameObject:
   m_ObjectHideFlags: 0

@@ -56,28 +56,53 @@ public class Summoner : GenericEnemy
 
     private Vector3 direction;
 
+    //third attk pattern variables
+    private Vector3 movementVector = Vector3.zero;
+    private bool isAttacking;
+    private Vector3 savedPosition;
+    private int attacks;
+    public float timeBtwSpawns;
+    public float startTimeBtwSpawns;
+    public GameObject trail;
+    public GameObject dashSound;
+
+    private RigidbodyConstraints2D originalConsraints;
+    public int tempCounter;
+
+    private GameObject shieldedHealth;
     public override void Start()
     {
         base.Start();
         anim = GetComponent<Animator>();
         isBoss = true;
+        isAttacking = false;
+        attacks = 0;
+        originalConsraints = GetComponent<Rigidbody2D>().constraints;
+        dpsCounter = 25;
+        tempCounter = 25;
+        shieldedHealth = GameObject.FindGameObjectWithTag("shieldHealth");
+        shieldedHealth.GetComponent<Slider>().maxValue = tempCounter;
+        
     }
 
     private void Update()
     {
         //flips animation
         spriteDirection();
-
         // Element of boss changes every 'x' seconds. sprite color signifies element
-        elementChange();
+        if(!isDpsCheck)
+            elementChange();
 
         if (health >= 75)
             firstAtkPattern();
         if (health < 75 && health >= 50)
-        {
-            
             secondAtkPattern();
-        }
+        if (health < 50 && health > 25)
+            thirdAtkPattern();
+        if (health == 25)
+            dpsCheck();
+        if (health < 25 && health > 0)
+            fourthAtkPattern();
 
 
     }
@@ -86,7 +111,9 @@ public class Summoner : GenericEnemy
     {
         if(player !=null)
         {
-            Instantiate(enemyToSummon, transform.position, transform.rotation);
+            Instantiate(enemyToSummon, shotPoint1.position, shotPoint1.rotation);
+            Instantiate(enemyToSummon, shotPoint2.position, shotPoint5.rotation);
+            Instantiate(enemyToSummon, shotPoint3.position, shotPoint7.rotation);
         }
     }
 
@@ -97,10 +124,10 @@ public class Summoner : GenericEnemy
         {
             anim.SetBool("isRunning", true);
 
-            if (Time.time >= summonTime)
+            if (Time.time >= attackTime)
             {
-                summonTime = Time.time + timeBetweenSummons;
-                anim.SetTrigger("shoot");
+                attackTime = Time.time + 5f;
+                anim.SetTrigger("summon");
 
             }
         }
@@ -108,7 +135,7 @@ public class Summoner : GenericEnemy
 
     public void secondAtkPattern()
     {
-
+        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
         anim.SetBool("isRunning", false);
         if (Time.time >= attackTime)
         {
@@ -155,7 +182,71 @@ public class Summoner : GenericEnemy
         Instantiate(fireball5, shotPoint6.position, shotPoint6.rotation);
         Instantiate(soundlessFireBall, shotPoint7.position, shotPoint7.rotation);
     }
+    public void thirdAtkPattern()
+    {
+        GetComponent<Rigidbody2D>().constraints = originalConsraints;
+        anim.SetBool("isRunning", true);
+        if (Time.time >= attackTime)
+        {
+            StartCoroutine(Prepare());
+            attackTime = Time.time + 5;
+        }
+    }
 
+    IEnumerator Prepare()
+    {
+        anim.SetBool("isRunning", false);
+        trail.SetActive(true);
+        movementVector = (player.position - transform.position).normalized * 50;
+        Vector2 originalPosition = transform.position;
+        Vector2 targetPosition = player.position;
+        float percent = 0;
+    //    Instantiate(enemySound, transform.position, Quaternion.identity);
+        while (percent <= 1)
+        {
+            percent += Time.deltaTime * attackSpeed;
+            transform.position += -movementVector * Time.deltaTime;
+
+            yield return null;
+        }
+        if (!isAttacking)
+        {
+            savedPosition = player.position;
+            isAttacking = true;
+        }
+        yield return new WaitForSeconds(0.1f);
+        StartCoroutine(Attack());
+    }
+
+    IEnumerator Attack()
+    {
+        while (attacks < 3)
+        {
+            //movementVector decides how fast and how far 
+            movementVector = (savedPosition - transform.position).normalized * 175;
+            Vector2 originalPosition = transform.position;
+            Vector2 targetPosition = player.position;
+            float percent = 0;
+            //percent decides duration of the dash. 
+            Instantiate(dashSound, transform.position, Quaternion.identity);
+            Instantiate(dashSound, transform.position, Quaternion.identity);
+            while (percent <= 0.75)
+            {
+                percent += Time.deltaTime * attackSpeed;
+                transform.position += movementVector * Time.deltaTime;
+                yield return null;
+            }
+            savedPosition = player.position;
+            attacks++;
+            yield return new WaitForSeconds(0.3f);
+        }
+  //      gameObject.layer = LayerMask.NameToLayer("Enemy");
+        isAttacking = false;
+        trail.SetActive(false);
+        anim.SetBool("isRunning", true);
+        attacks = 0;
+
+    }
     public void spriteDirection()
     {
         direction = (transform.position - player.position).normalized;
@@ -169,6 +260,63 @@ public class Summoner : GenericEnemy
             transform.eulerAngles = new Vector3(0, 0, 0);
         }
     }
+    public void dpsCheck()
+    {
+        shieldedHealth.SetActive(true);
+        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+        anim.SetBool("isRunning", false);
+        isDpsCheck = true;
+        // also make him teleport to center.
+        if(dpsCounter > 0)
+        {
+            if (dpsCounter == tempCounter - 1)
+            {
+                tempCounter = dpsCounter;
+                int randomNum = Random.Range(1, 5);
+                changeElement(randomNum);
+            }
+        }
+        else
+        {
+            isDpsCheck = false;
+            GetComponent<Rigidbody2D>().constraints = originalConsraints;
+            anim.SetBool("isRunning", true);
+            health--;
+        }
+        
+    }
+    public void fourthAtkPattern()
+    {
+        if (Time.time >= attackTime)
+        {
+
+            int random = Random.Range(0, 3);
+            if (random == 0)
+            {
+                firstAtkPattern();
+                StartCoroutine(atkPatternInterval(1));
+            }
+            if (random == 1)
+            {
+                anim.SetBool("isRunning", false);
+                secondAtkPattern();
+                StartCoroutine(atkPatternInterval(2));
+            }
+            if (random == 2)
+            {
+                thirdAtkPattern();
+                StartCoroutine(atkPatternInterval(3));
+            }
+        }
+    }
+
+    private IEnumerator atkPatternInterval(int pattern)
+    {
+        if (pattern != 2)
+            yield return new WaitForSeconds(1f);
+        else
+            yield return new WaitForSeconds(0.5f);
+    }
 
     public void elementChange()
     {
@@ -180,44 +328,76 @@ public class Summoner : GenericEnemy
                 random = 3;
             if (random == 1 && element != 1)
             {
-                mySprite1.color = fireElement;
-                mySprite2.color = fireElement;
-                mySprite3.color = fireElement;
-                element = 1;
-                ColorBlock cb = bossHealthBar.colors;
-                cb.disabledColor = new Color32(168, 18, 18, 255);
-                bossHealthBar.colors = cb;
+                changeElement(1);
             }
             else if (random == 2 && element != 2)
             {
-                mySprite1.color = waterElement;
-                mySprite2.color = waterElement;
-                mySprite3.color = waterElement;
-                element = 2;
-                ColorBlock cb = bossHealthBar.colors;
-                cb.disabledColor = new Color32(0, 39, 212, 255);
-                bossHealthBar.colors = cb;
+                changeElement(2);
             }
             else if (random == 3 && element != 3)
             {
-                mySprite1.color = airElement;
-                mySprite2.color = airElement;
-                mySprite3.color = airElement;
-                element = 3;
-                ColorBlock cb = bossHealthBar.colors;
-                cb.disabledColor = new Color32(255, 255, 255, 128);
-                bossHealthBar.colors = cb;
+                changeElement(3);
             }
             else
             {
-                mySprite1.color = earthElement;
-                mySprite2.color = earthElement;
-                mySprite3.color = earthElement;
-                element = 4;
-                ColorBlock cb = bossHealthBar.colors;
-                cb.disabledColor = new Color32(0, 140, 4, 255);
-                bossHealthBar.colors = cb;
+                changeElement(4);
             }
+        }
+    }
+
+    private void changeElement(int newElement)
+    {
+        if (newElement == 1)
+        {
+            mySprite1.color = fireElement;
+            mySprite2.color = fireElement;
+            mySprite3.color = fireElement;
+            element = 1;
+            Debug.Log("i changed it1" + "it's " + element);
+            ColorBlock cb = bossHealthBar.colors;
+            cb.disabledColor = new Color32(168, 18, 18, 255);
+            bossHealthBar.colors = cb;
+            trail.GetComponent<TrailRenderer>().startColor = new Color32(168, 18, 18, 255);
+            trail.GetComponent<TrailRenderer>().endColor = Color.white;
+        }
+        if (newElement == 2)
+        {
+            mySprite1.color = waterElement;
+            mySprite2.color = waterElement;
+            mySprite3.color = waterElement;
+            element = 2;
+            Debug.Log("i changed it2" + "it's " + element);
+            ColorBlock cb = bossHealthBar.colors;
+            cb.disabledColor = new Color32(0, 39, 212, 255);
+            bossHealthBar.colors = cb;
+            trail.GetComponent<TrailRenderer>().startColor = new Color32(0, 39, 212, 255);
+            trail.GetComponent<TrailRenderer>().endColor = Color.white;
+        }
+        if (newElement == 3)
+        {
+            mySprite1.color = airElement;
+            mySprite2.color = airElement;
+            mySprite3.color = airElement;
+            element = 3;
+            Debug.Log("i changed it3" + "it's " + element);
+            ColorBlock cb = bossHealthBar.colors;
+            cb.disabledColor = new Color32(255, 255, 255, 128);
+            bossHealthBar.colors = cb;
+            trail.GetComponent<TrailRenderer>().startColor = new Color32(255, 255, 255, 128);
+            trail.GetComponent<TrailRenderer>().endColor = Color.white;
+        }
+        if (newElement == 4)
+        {
+            mySprite1.color = earthElement;
+            mySprite2.color = earthElement;
+            mySprite3.color = earthElement;
+            element = 4;
+            Debug.Log("i changed it4" + "it's " + element);
+            ColorBlock cb = bossHealthBar.colors;
+            cb.disabledColor = new Color32(0, 140, 4, 255);
+            bossHealthBar.colors = cb;
+            trail.GetComponent<TrailRenderer>().startColor = new Color32(0, 140, 4, 255);
+            trail.GetComponent<TrailRenderer>().endColor = Color.white;
         }
     }
 
@@ -256,7 +436,6 @@ public class Summoner : GenericEnemy
                 {
                     bonus = 0;
                 }
-                Debug.Log(bonus);
                 return bonus;
 
             case 3:
@@ -272,7 +451,6 @@ public class Summoner : GenericEnemy
                 {
                     bonus = 0;
                 }
-                Debug.Log(bonus);
                 return bonus;
             default:
                 if (wepElement == 3)
@@ -287,10 +465,17 @@ public class Summoner : GenericEnemy
                 {
                     bonus = 0;
                 }
-                Debug.Log(bonus);
                 return bonus;
 
 
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && GetComponent<Collider2D>().isTrigger)
+        {
+            player.GetComponent<SimplePlayer>().TakeDamage(damage);
         }
     }
 }

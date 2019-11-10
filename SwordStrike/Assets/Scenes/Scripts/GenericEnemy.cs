@@ -9,6 +9,8 @@ public class GenericEnemy : MonoBehaviour
 
     [HideInInspector]
     public Transform player;
+    public bool isDpsCheck;
+    public int dpsCounter;
 
     public float speed;
 
@@ -61,28 +63,32 @@ public class GenericEnemy : MonoBehaviour
             healthBar.gameObject.SetActive(true);
         }
         isDead = false;
+        isDpsCheck = false;
     }
 
 
 
     public virtual bool TakeDamage(float damageAmount, int wepElement)
     {
-        switch (element)
+        float dmg = elementalBonus(damageAmount, wepElement);
+        if (!isDpsCheck)
         {
-            case 1:
-                health = health - elementalBonus(damageAmount, wepElement);
-                break;
-            case 2:
-                health = health - elementalBonus(damageAmount, wepElement);
-                break;
-            case 3:
-                health = health - elementalBonus(damageAmount, wepElement);
-                break;
-            default:
-                health = health - elementalBonus(damageAmount, wepElement);
-                break;
+            switch (element)
+            {
+                case 1:
+                    health = health - dmg;
+                    break;
+                case 2:
+                    health = health - dmg;
+                    break;
+                case 3:
+                    health = health - dmg;
+                    break;
+                default:
+                    health = health - dmg;
+                    break;
+            }
         }
-
         if (health <= 0)
         {
             //loot
@@ -93,19 +99,23 @@ public class GenericEnemy : MonoBehaviour
                 Instantiate(randomPickup, transform.position, transform.rotation);
             }
             Instantiate(deathEffect, transform.position, Quaternion.identity);
-
             healthBar.SetActive(false);
             Destroy(gameObject);
-            Destroy(healthBar);
+            if(!isBoss)
+                Destroy(healthBar);
             isDead = true;
             return isDead;
         }
+
         if(!isBoss)
           healthBar.GetComponent<Slider>().value = health;
         else if(isBoss)
         {
-            bossHealthBar.value = health;
+          bossHealthBar.value = health;
+            if (isDpsCheck && dmg==damageAmount)
+                dpsCounter--;
         }
+        
 
         return isDead;
     }
@@ -129,7 +139,6 @@ public class GenericEnemy : MonoBehaviour
                 {
                     bonus = damageAmount;
                 }
-                Debug.Log(bonus);
                 return bonus;
             case 2:
                 if(wepElement == 1)
@@ -144,7 +153,6 @@ public class GenericEnemy : MonoBehaviour
                 {
                   bonus = damageAmount;
                 }
-                Debug.Log(bonus);
                 return bonus;
             
             case 3:
@@ -160,7 +168,6 @@ public class GenericEnemy : MonoBehaviour
                 {
                     bonus = damageAmount;
                 }
-                Debug.Log(bonus);
                 return bonus;
             default:
                 if (wepElement == 3)
@@ -175,7 +182,6 @@ public class GenericEnemy : MonoBehaviour
                 {
                     bonus = damageAmount;
                 }
-                Debug.Log(bonus);
                 return bonus;
 
                 

@@ -81,9 +81,11 @@ public class WaveSpawner : MonoBehaviour
             else
             {
                 Instantiate(boss, bossSpawnPoint.position, bossSpawnPoint.rotation);
-                healthBar.SetActive(true);
+               // healthBar.SetActive(true);
             }
+
         }
+
             
     }
 }

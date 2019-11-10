@@ -186,9 +186,13 @@ public class Weapon : MonoBehaviour
             if (attacking == true)
             {
                 bool temp;
-                temp = collision.GetComponent<GenericEnemy>().TakeDamage(damage, element);
-                if (temp)
-                    onKill.Invoke();
+                //if (!collision.GetComponent<GenericEnemy>().isDpsCheck)
+                //{
+                    temp = collision.GetComponent<GenericEnemy>().TakeDamage(damage, element);
+
+                    if (temp)
+                        onKill.Invoke();
+               // }
             }
         }
     }

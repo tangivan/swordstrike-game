@@ -80,8 +80,8 @@ public class Summoner : GenericEnemy
         originalConsraints = GetComponent<Rigidbody2D>().constraints;
         dpsCounter = 25;
         tempCounter = 25;
-        shieldedHealth = GameObject.FindGameObjectWithTag("shieldHealth");
-        shieldedHealth.GetComponent<Slider>().maxValue = tempCounter;
+        //shieldedHealth = GameObject.FindGameObjectWithTag("shieldHealth");
+       // shieldedHealth.GetComponent<Slider>().maxValue = tempCounter;
         
     }
 
@@ -262,7 +262,7 @@ public class Summoner : GenericEnemy
     }
     public void dpsCheck()
     {
-        shieldedHealth.SetActive(true);
+        //shieldedHealth.SetActive(true);
         GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
         anim.SetBool("isRunning", false);
         isDpsCheck = true;

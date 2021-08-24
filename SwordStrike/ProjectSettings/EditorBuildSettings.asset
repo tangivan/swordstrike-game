@@ -6,7 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Scenes/FINALPC.unity
+    path: Assets/Scenes/Scenes/MainMenu.unity
+    guid: 5c9a7ee084a428c4fb9e8876b867d47f
+  - enabled: 1
+    path: Assets/Scenes/Scenes/Easy.unity
     guid: 1cd769ce994bcb3469edd8ef38b2e64f
   - enabled: 0
     path: Assets/Scenes/Scenes/FINALMobile.unity
@@ -15,12 +18,18 @@ EditorBuildSettings:
     path: Assets/Scenes/Scenes/Controls.unity
     guid: dd9a16f95b8290545a1ee68a730c79b4
   - enabled: 1
-    path: Assets/Scenes/Scenes/MainMenu.unity
-    guid: 5c9a7ee084a428c4fb9e8876b867d47f
-  - enabled: 1
     path: Assets/Scenes/Scenes/Lose.unity
     guid: f2c419cebc81d0c46be5a93c9e4da555
   - enabled: 1
     path: Assets/Scenes/Scenes/Win.unity
     guid: c6d4cab2321dbcd4084fcb652ba98f1e
+  - enabled: 1
+    path: Assets/Scenes/Scenes/Medium.unity
+    guid: e134158c892d88d4b9fdff0539644989
+  - enabled: 1
+    path: Assets/Scenes/Scenes/Hard.unity
+    guid: 4f64ec63f30b8a64d8aeee08eb3c4f2c
+  - enabled: 1
+    path: Assets/Scenes/Scenes/difficulty.unity
+    guid: 5b930bad048684041a68654514289f8d
   m_configObjects: {}

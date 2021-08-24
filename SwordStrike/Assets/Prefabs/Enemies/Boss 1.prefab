@@ -198,6 +198,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 30
   player: {fileID: 0}
+  isDpsCheck: 0
+  dpsCounter: 0
   speed: 5
   timeBetweenAttacks: 3
   damage: 1
@@ -294,6 +296,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 20
   player: {fileID: 0}
+  isDpsCheck: 0
+  dpsCounter: 0
   speed: 0
   timeBetweenAttacks: 0
   damage: 1
@@ -347,6 +351,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 20
   player: {fileID: 0}
+  isDpsCheck: 0
+  dpsCounter: 0
   speed: 0
   timeBetweenAttacks: 0
   damage: 1
@@ -440,6 +446,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 20
   player: {fileID: 0}
+  isDpsCheck: 0
+  dpsCounter: 0
   speed: 0
   timeBetweenAttacks: 0
   damage: 0
@@ -513,6 +521,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 20
   player: {fileID: 0}
+  isDpsCheck: 0
+  dpsCounter: 0
   speed: 0
   timeBetweenAttacks: 0
   damage: 0

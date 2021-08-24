@@ -15,6 +15,7 @@ TagManager:
   - Wall
   - patrolPoints
   - bossHealth
+  - shieldHealth
   layers:
   - Default
   - TransparentFX

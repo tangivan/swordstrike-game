@@ -273,6 +273,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   player: {fileID: 0}
+  isDpsCheck: 0
+  dpsCounter: 0
   speed: 0
   timeBetweenAttacks: 0
   damage: 1

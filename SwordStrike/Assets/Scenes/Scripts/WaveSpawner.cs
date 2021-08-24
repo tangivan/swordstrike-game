@@ -24,12 +24,16 @@ public class WaveSpawner : MonoBehaviour
 
     public GameObject boss;
     public Transform bossSpawnPoint;
+    public bool isBossLevel;
 
     public GameObject healthBar;
+
+    private SceneTransitions sceneTransitions;
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        sceneTransitions = FindObjectOfType<SceneTransitions>();
         StartCoroutine(StartNextWave(currentWaveIndex));
     }
 
@@ -80,8 +84,14 @@ public class WaveSpawner : MonoBehaviour
             }
             else
             {
-                Instantiate(boss, bossSpawnPoint.position, bossSpawnPoint.rotation);
-               // healthBar.SetActive(true);
+                if(isBossLevel){
+                    Instantiate(boss, bossSpawnPoint.position, bossSpawnPoint.rotation);
+                    healthBar.SetActive(true);
+                }
+                else {
+                    this.enabled = false;
+                    sceneTransitions.LoadScene("Win");
+                }
             }
 
         }

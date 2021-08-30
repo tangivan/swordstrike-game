@@ -28,6 +28,9 @@
         <li><a href="#features-implemented">Features Implemented</a></li>
       </ul>
     </li>
+    <li>
+      <a href="#note">Note</a>
+    </li>
   </ol>
 </details>
 
@@ -67,3 +70,5 @@ The core mechanic Swordstrike utilizes in the game is the ability for the player
 * Two types of bosses
 * Three difficulties
 
+### Note
+This is not a full feature-complete game and is just a personal project that I work on to test mechanic ideas I have in my mind. 
